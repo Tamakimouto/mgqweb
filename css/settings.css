@@ -21,34 +21,31 @@ body {
 }
 
 #dialogDiv {
-    font-family: "Deja Vu Sans", Helvetica, Arial, sans-serif;
+    font-family: "DeJaVu Serif", Helvetica, Arial, sans-serif;
     font-size: 20px;
     position: absolute;
     width: 790px;
     height: 140px;
+    background-color: rgba(0, 0, 0, 0);
     top: 450px;
     left: 0;
-    background-color: #3d372c;
     color: white;
     padding: 5px;
     text-align: left;
-    filter: alpha(opacity=75);
-    opacity: 0.75;
+    opacity: .75;
     z-index: 100;
 }
 
 .menuItem {
-    width: 75%;
+    width: 30%;
     margin: 0.5em auto;
     padding: 0.5em 3em;
     background-color: #0050a0;
     position: relative;
     text-align: center;
     color: white;
-    font-family: "Deja Vu Sans", Helvetica, Arial, sans-serif;
-    font-size: 18px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
+    font-family: "DeJaVu Serif", Helvetica, Arial, sans-serif;
+    font-size: 15px;
 }
 
 div.menuItem:hover {
