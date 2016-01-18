@@ -42,6 +42,7 @@ body {
     padding: 0.5em 3em;
     background-color: #0050a0;
     position: relative;
+    top: 50%;
     text-align: center;
     color: white;
     font-family: "DeJaVu Serif", Helvetica, Arial, sans-serif;
