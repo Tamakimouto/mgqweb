@@ -179,7 +179,7 @@ Character.prototype.finishDisplay = function(param, displayImage)
 */
 Character.prototype.show = function(visible)
 {
-    if (this.domRef) {
+    if (this.domRef)
         this.domRef.style.visibility = (visible) ? "visible" : "hidden";
 }
 
