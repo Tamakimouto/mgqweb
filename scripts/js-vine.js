@@ -179,10 +179,8 @@ Character.prototype.finishDisplay = function(param, displayImage)
 */
 Character.prototype.show = function(visible)
 {
-    if (this.domRef)
-    {
+    if (this.domRef) {
         this.domRef.style.visibility = (visible) ? "visible" : "hidden";
-    }
 }
 
 /*
@@ -206,26 +204,24 @@ Character.prototype.say = function(str)
     var htmlStr = "";
     var interpolatedString = str;
     clearDialog();
-    if (this.avatar != "")
-    {
+    if (this.avatar != "") {
         htmlStr += '<img src="' +
             novel.imagePath +
             this.avatar.replace(/{{(.*?)}}/g, novel_interpolator) +
             '" class="avatar"/>';
     }
-    if (this.name != "")
-    {
+
+    if (this.name != "") {
         htmlStr += '<span style="color: ' + this.color + '">' +
         this.name + ':</span><br />';
     }
+
     if (str.indexOf("{{") >= 0)
-    {
         str = str.replace(/{{(.*?)}}/g, novel_interpolator);
-    }
+
     htmlStr += str;
     novel.dialog.innerHTML = htmlStr;
     novel.paused = true;
-    // novel.paused = (arguments.length == 1) ? true : (!arguments[1]);
 }
 
 /*
@@ -236,13 +232,9 @@ Character.prototype.say = function(str)
 Character.prototype.doAction = function(param)
 {
     if (param == null || param == "" || param.constructor == Object)
-    {
         this.display(param);
-    }
     else if (param.constructor == String)
-    {
         this.say(param);
-    }
 }
 
 
@@ -267,9 +259,8 @@ Character.prototype.doAction = function(param)
 function TextBlock(textName)
 {
     if (textName == '')
-    {
         textName = "anon" + novel.anonymous++;
-    }
+
     this.escName = escape(textName);
     this.color = "#000000";
     this.div = document.createElement("div");
@@ -288,15 +279,13 @@ function TextBlock(textName)
         If given a second parameter, use its fields
         to set the TextBlock's fields
     */
-    if (arguments.length > 1)
-    {
+    if (arguments.length > 1) {
         var param = arguments[1];
         for (var property in param)
-        {
             this[property] = param[property];
-        }
     }
 }
+
 
 /*
     Convenience method to set the HTML within a text block
@@ -305,6 +294,7 @@ TextBlock.prototype.setText = function(html)
 {
     this.domRef.innerHTML = html;
 }
+
 
 /*
     Set the transparency. If the picture is completely opaque,
@@ -316,6 +306,7 @@ TextBlock.prototype.setAlpha = function(alpha)
     novel_setAlpha(this, alpha);
 }
 
+
 /*
     Display the text block on the screen
 */
@@ -325,8 +316,7 @@ TextBlock.prototype.display = function(param)
         If the <div> isn't in the DOM yet, insert it,
         and add it to the list of actors in the tableau.
     */
-    if (this.domRef == null)
-    {
+    if (this.domRef == null) {
         novel.tableau.appendChild(this.div);
         novel.actors.push(this);
     }
@@ -346,24 +336,18 @@ function novel_textEntity_display(obj, param)
     var yPos;
 
     el.style.visibility = "hidden";
-    if (param != null)
-    {
+    if (param != null) {
         if (param.constructor == Position)
-        {
             obj.position = param;
-        }
         else if (param.constructor == String)
-        {
             obj.text = param;
-        }
-        else if (param.constructor == Object)
-        {
-            for (var propertyName in param)
-            {
+        else if (param.constructor == Object) {
+            for (var propertyName in param) {
                 obj[propertyName] = param[propertyName];
             }
         }
     }
+
     // set the text
     el.innerHTML = obj.text.replace(/{{(.*?)}}/g,
         novel_interpolator);
@@ -373,41 +357,32 @@ function novel_textEntity_display(obj, param)
 
     // and its position and attributes
     if (obj.position.xRelative)
-    {
         xPos *= novel.width;
-    }
+
     if (obj.position.yRelative)
-    {
         yPos *= novel.height;
-    }
+
     if (obj.color)
-    {
         el.style.color = obj.color;
-    }
+
     if (obj.backgroundColor)
-    {
         el.style.backgroundColor = obj.backgroundColor;
-    }
+
     if (obj.font)
-    {
         el.style.font = obj.font;
-    }
+
     if (obj.border)
-    {
         el.style.border = obj.border;
-    }
+
     if (obj.padding)
-    {
         el.style.padding = obj.padding;
-    }
+
     if (obj.align)
-    {
         el.style.textAlign = obj.align;
-    }
+
     if (!obj.visibility)
-    {
         obj.visibility = "visible";
-    }
+
     el.style.position = "absolute";
     el.style.width = Math.floor(obj.width * 100) + "%";
     el.style.left = xPos + "px";
@@ -415,9 +390,9 @@ function novel_textEntity_display(obj, param)
     el.style.visibility = obj.visibility; // then reveal (if visible)
 }
 
-/*
-    A convenience method; parameter is either true or false
-    to show or hide a text block
+/**
+*   A convenience method; parameter is either true or false
+*   to show or hide a text block
 */
 TextBlock.prototype.show = function(visible)
 {
@@ -427,38 +402,37 @@ TextBlock.prototype.show = function(visible)
     }
 }
 
-/*
-    At this moment, the only action a text block can
-    take is to display itself.
+/**
+*   At this moment, the only action a text block can
+*   take is to display itself.
 */
 TextBlock.prototype.doAction = function(param)
 {
     this.display(param);
 }
 
-/*
-    A Input is a block of text that can be displayed.
-
-    name: the name for this text block
-    escName: the escape() of the name; used as an id="" attribute
-    color: text color for this block
-    backgroundColor: background color for this block
-    inputElement: a <input type="text" class="textClass"> element that holds the text
-    domRef: a reference to the <div> once inserted into the DOM
-    position: where to display this text block
-    align: text alignment, as in CSS
-    border: a border specification as in CSS
-    font: the font to use to display the text
-    width: % of width of the window; range from 0 to 1.0
-    visibility: "visible" or "hidden", as in CSS
-    text: initial value of text field
+/**
+*   A Input is a block of text that can be displayed.
+*
+*   name: the name for this text block
+*   escName: the escape() of the name; used as an id="" attribute
+*   color: text color for this block
+*   backgroundColor: background color for this block
+*   inputElement: a <input type="text" class="textClass"> element that holds the text
+*   domRef: a reference to the <div> once inserted into the DOM
+*   position: where to display this text block
+*   align: text alignment, as in CSS
+*   border: a border specification as in CSS
+*   font: the font to use to display the text
+*   width: % of width of the window; range from 0 to 1.0
+*   visibility: "visible" or "hidden", as in CSS
+*   text: initial value of text field
 */
 function Input(textName)
 {
     if (textName == '')
-    {
         textName = "anon" + novel.anonymous++;
-    }
+
     this.escName = escape(textName);
     this.color = "#000000";
     this.inputElement = document.createElement("input");
@@ -466,14 +440,12 @@ function Input(textName)
     this.inputElement.setAttribute("id", this.escName);
     this.inputElement.setAttribute("class", "textClass");
     this.inputElement.setAttribute("className", "textClass");
+
     if (this.inputElement.addEventListener)
-    {
         this.inputElement.addEventListener("change", novel_inputChange, false);
-    }
     else
-    {
         this.inputElement.attachEvent("onchange", novel_inputChange);
-    }
+
     this.domRef = null;
     this.position = new Position(0, 0, true);
     this.align = "left";
@@ -486,13 +458,10 @@ function Input(textName)
         If given a second parameter, use its fields
         to set the Input's fields
     */
-    if (arguments.length > 1)
-    {
+    if (arguments.length > 1) {
         var param = arguments[1];
         for (var property in param)
-        {
             this[property] = param[property];
-        }
     }
 }
 
@@ -1400,7 +1369,7 @@ function sub(str)
 
 /*
     Play the audio with the given filename. The default
-    action is to NOT loop the sound indefinitely.
+    action is to loop the sound indefinitely.
 
     If given an object, the src property gives the filename
     and the loop property (boolean) tells whether to loop or not.
@@ -1426,7 +1395,7 @@ function audio(param)
             {
                 audioSource = param;
                 novel.audio.src = novel.audioPath + audioSource;
-                novel.audioLoop = false;
+                novel.audioLoop = true;
             }
             else if (param.constructor == Object)
             {
@@ -1448,7 +1417,7 @@ function audio(param)
                     {
                         audioSource = audioSource + "." + suffix;
 						novel.audio.src = novel.audioPath + audioSource;
-						novel.audioLoop = false;
+						novel.audioLoop = true;
                     }
 					else
 					{
