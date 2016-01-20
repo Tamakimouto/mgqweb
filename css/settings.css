@@ -10,9 +10,31 @@ body {
     z-index:-1
 }
 
-@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-webkit-keyframes fadeIn {
+    from { opacity:0; }
+    to { opacity:1; }
+}
+@-moz-keyframes fadeIn {
+    from { opacity:0; }
+    to { opacity:1; }
+}
+@keyframes fadeIn {
+    from { opacity:0; }
+    to { opacity:1; }
+}
+
+@-webkit-keyframes fadeOut {
+    from { opacity:1; }
+    to { opacity:0; }
+}
+@-moz-keyframes fadeOut {
+    from { opacity:1; }
+    to { opacity:0; }
+}
+@keyframes fadeOut {
+    from { opacity:1; }
+    to { opacity:0; }
+}
 
 #novelDiv {
     width: 800px;
@@ -46,14 +68,17 @@ body {
     font-size: 20px;
     position: absolute;
     width: 790px;
-    height: 140px;
+    height: 120px;
     background-color: rgba(0, 0, 0, 0);
+    background-image: url("../img/dialog.png");
+    background-repeat: no-repeat;
+    background-position: center;
     top: 450px;
     left: 0;
     color: white;
     padding: 5px;
     text-align: left;
-    opacity: .75;
+    opacity: 0;
     z-index: 100;
 }
 
