@@ -38,9 +38,8 @@ function prepareNovel()
 
         label, "titleMenu",
         menu, [
-            "MGQ - The Web Version",
+            "",
             "Start Game", [jump, "new"],
-            "Load Game", [jump, "notNew"],
         ],
 
         label, "new",
