@@ -62,6 +62,8 @@ function prepareNovel()
         ilias, "Oh brave Luka...can you hear my voice?",
 
         label, "IliasMeeting",
+        hide, ilias,
+        jsCall, {fcn: toggleDialog, params: []},
         menu, [
             "",
             "I can!", [jump, "confirmVoice"],
@@ -69,7 +71,13 @@ function prepareNovel()
             "....", [jump, "ignoreVoice"],
         ],
 
+        label, "denyVoice",
+
+        label, "ignoreVoice",
+
         label, "confirmVoice",
+        show, ilias,
+        jsCall, {fcn: toggleDialog, params: []},
         luka, "I can hear you, Ilias!",
         narrator, "I begin to tremble at the sound of Ilias' voice.",
         narrator, "The goddess whom created the world, who extends her love to Humanity.",
@@ -121,9 +129,9 @@ function transStart(){
     $("#novelDiv").css("-moz-animation-fill-mode", "forwards");
     $("#novelDiv").css("animation-fill-mode", "forwards");
 
-    $("#novelDiv").css("-webkit-animation-duration", "1s");
-    $("#novelDiv").css("-moz-animation-duration", "1s");
-    $("#novelDiv").css("animation-duration", "1s");
+    $("#novelDiv").css("-webkit-animation-duration", "2s");
+    $("#novelDiv").css("-moz-animation-duration", "2s");
+    $("#novelDiv").css("animation-duration", "2s");
 }
 
 function transEnd(){
