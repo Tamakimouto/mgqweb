@@ -22,6 +22,11 @@ function prepareNovel()
     luka = new Character("Luka", {color: "rgb(169, 131, 189)"});
     alice = new Character("Alice", {color: "rgb(94, 86, 106)"});
     ilias = new Character("Ilias", {color: "rgb(255, 247, 214)"});
+    villager = new Character("Villager", {color: "rgb(168, 30, 200)"});
+    woman = new Character("Woman", {color: "pink"});
+    man = new Character("Man", {color: "blue"});
+    child = new Character("Child", {color: "rgb(34, 76, 80)"});
+    hans = new Character("Hans", {color: "blue"});
     narrator = new Character("");
     mystery = new Character("???");
 
@@ -92,7 +97,7 @@ function prepareNovel()
         ilias, "And you, Luka, have finally come of age today, have you not?",
         luka, "Yes...I have long been looking forward to this day!",
         narrator, "Today, I shall finally receive the baptism in Ilias' name. <br> After being baptized, I will be recognized as a Hero!",
-        narrator, "Being a Hero has always been my dream, and finally the long awaited day has arrived! <br> Even though my village has been peaceful, I devoted all of my time to training with a sword.",
+        narrator, "Being a Hero has always been my dream, and finally the long awaited day has arrived! Even though my village has been peaceful, I devoted all of my time to training with a sword.",
         narrator, "And finally! <br> The day when I shall finally become a Hero has come at last!",
         ilias, "Up until now, I have given my blessing and protection to many men... <br> However, the monsters still have not been exterminated.",
         ilias, "Not since Heinrich, 500 years ago, has a man been able to defeat a Monster Lord.",
@@ -108,7 +113,52 @@ function prepareNovel()
         scene, "lukaHouse.jpg",
         audio, {src: "iliasville", format: ["ogg"], action: "play"},
         jsCall, {fcn: transEnd, params: []},
-        luka, "I open my eyes to the soft light of the morning sun coming through the window.",
+        narrator, "I open my eyes to the soft light of the morning sun coming through the window.",
+        narrator, "Was that just a dream...? <br> There's no way that was just a normal dream!",
+        narrator, "I definitely talked to Ilias!",
+        luka, "Oh great Ilias...thank you! <br> Please watch over me.",
+        narrator, "Like everyday, I start off with a prayer to Ilias.",
+        narrator, "After my prayers have finished, I turn to the keepsake of my mother.",
+        luka, "Good morning, Mother. <br> Today I will finally begin my journey as a Hero.",
+        narrator, "With my morning routine finished, I begin to get ready for my trip. <br> It's a beautiful day outside, with the fresh morning scent filling the air.",
+        narrator, "This morning, I will travel to Ilias Temple to receive my baptism. Once baptized, I will begin my journey to defeat the Monster Lord.",
+        narrator, "I won't be returning to this house for a while. <br> With such a sad thought in my mind, I look around my small home.",
+        narrator, "Well, until I defeat the Monster Lord, I won't be coming back here... <br> I better clean you so you look great when I come back!",
+        narrator, "I start off by making my bed.",
+        villager, "He...Help!",
+        luka, "Hmm? What was that?",
+        narrator, "While making my bed, I hear a man's scream. <br> It sounded liek Hans, the lumberjack. <br> What's happening so early in the morning...?",
+        hans, "Monster...A monster is in the forest!",
+        audio, {src: "danger", format: ["ogg"], action: "play"},
+        luka, "W...What!?",
+        narrator, "In Ilias Village? How can a monster appear in such a peaceful village...?",
+        narrator, "Even though Ilias Village is small, it still has a gigantic temple. <br> The temple where the goddess is revered: Ilias Temple.",
+        narrator, "With such a huge temple nearby, monsters dare not approach this village.",
+        villager, "Everyone, hide in your houses! Quickly, before the monster comes into the village!",
+        woman, "Ahhhhhh!",
+        child, "Mommy!",
+        narrator, "Such a peaceful village has quickly fallen into panic. <br> On the day of my baptism...why did this have to happen!?",
+        luka, "Wh...What do I do!?",
+        narrator, "I haven't ever fought a monster before...in fact, I've never even seen one.",
+        narrator, "However, one day I will fight the Monster Lord. <br> If I can't fight a monster of this level, how can I expect to be a Hero!?",
+
+        label, "run or fight",
+        jsCall, {fcn: toggleDialog, params: []},
+        menu, [
+            "",
+            "Fight", [jump, "defendVillage"],
+            "Run", [jump, "hideVillage"],
+        ],
+
+        label, "defendVillage",
+        jsCall, {fcn: toggleDialog, params: []},
+        luka, "Alright, here I go!",
+        narrator, "I grab my sword and dash out of the house.",
+        narrator, "The village where I was born and raised... <br> I will defend it!",
+        jsCall, {fcn: transStart, params: []},
+        scene, "hometown.jpg",
+        jsCall, {fcn: transEnd, params: []},
+        man, "Ahh! Run away!",
 
     ]; //script
 }
@@ -118,6 +168,10 @@ function toggleDialog(){
         $("#dialogDiv").css("opacity", "0.75");
     else
         $("#dialogDiv").css("opacity", "0");
+}
+
+function sleep(){
+    setTimeout(function(){}, 2000);
 }
 
 function transStart(){
