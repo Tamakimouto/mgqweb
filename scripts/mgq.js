@@ -26,6 +26,7 @@ function prepareNovel()
     villager = new Character("Villager", {color: "rgb(168, 30, 200)"});
     woman = new Character("Woman", {color: "pink"});
     man = new Character("Man", {color: "blue"});
+    farmer = new Character("Farmer", {color: "blue"});
     child = new Character("Child", {color: "rgb(34, 76, 80)"});
     hans = new Character("Hans", {color: "blue"});
     narrator = new Character("");
@@ -163,7 +164,7 @@ function prepareNovel()
         narrator, "I start off by making my bed.",
         villager, "He...Help!",
         luka, "Hmm? What was that?",
-        narrator, "While making my bed, I hear a man's scream. <br> It sounded liek Hans, the lumberjack. <br> What's happening so early in the morning...?",
+        narrator, "While making my bed, I hear a man's scream. <br> It sounded like Hans, the lumberjack. <br> What's happening so early in the morning...?",
         hans, "Monster...A monster is in the forest!",
         audio, {src: "danger", format: ["ogg"], action: "play"},
         luka, "W...What!?",
@@ -187,14 +188,24 @@ function prepareNovel()
         ],
 
         label, "defendVillage",
+        scene, "lukaHouse.jpg",
+        setVars, "loadTarget = 'defendVillage'",
+        codeBox, "Continue Code: {{loadTarget}}",
+        audio, {src: "danger", format: ["ogg"], action: "play"},
+        ifStatement, "flip == 0",
         jsCall, {fcn: toggleDialog, params: []},
+        endIf, "",
         luka, "Alright, here I go!",
         narrator, "I grab my sword and dash out of the house.",
         narrator, "The village where I was born and raised... <br> I will defend it!",
         jsCall, {fcn: transStart, params: []},
         scene, "hometown.jpg",
+        codeBox, "Continue Code: {{loadTarget}}",
         jsCall, {fcn: transEnd, params: []},
-        man, "Ahh! Run away!",
+        farmer, {image:"ch/man.png", position: center},
+        farmer, "Ahh! Run away!",
+        man, {image: "ch/man.png", position: center},
+        man, "Ahh! What should I do!?",
 
     ]; //script
 }
