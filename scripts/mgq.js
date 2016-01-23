@@ -71,7 +71,7 @@ function prepareNovel()
         jsCall, {fcn: transStart, params: []},
         audio, {action: "stop"},
         scene, "heaven.jpg",
-        codeBox, "{{loadTarget}}",
+        codeBox, "Continue Code: {{loadTarget}}",
         jsCall, {fcn: transEnd, params: []},
         jsCall, {fcn: toggleDialog, params: []},
         narrator, "Where am I...?",
@@ -144,7 +144,9 @@ function prepareNovel()
         jump, "freshStart",
 
         label, "freshStart",
+        setVars, "loadTarget = 'freshStart'",
         scene, "lukaHouse.jpg",
+        codeBox, "Continue Code: {{loadTarget}}",
         audio, {src: "iliasville", format: ["ogg"], action: "play"},
         jsCall, {fcn: transEnd, params: []},
         narrator, "I open my eyes to the soft light of the morning sun coming through the window.",
