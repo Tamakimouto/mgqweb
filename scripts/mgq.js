@@ -13,6 +13,7 @@ var script;
 var Luka, Alice, narrator, item;
 var center, upperCenter, left, right;
 var text;
+var loadTarget = "default", input;
 
 function prepareNovel()
 {
@@ -36,6 +37,12 @@ function prepareNovel()
     right = new Position(0.9, 0.7, 0.5, 0.5);
 
     item = new Character("", {position: upperCenter});
+    inputBox = new Input('continueCode',
+                      {
+                          position: center,
+                          width: 0.4,
+                          text: "Insert Code Here"
+                      });
     text = new TextBlock("");
 
     script = [
@@ -46,7 +53,8 @@ function prepareNovel()
         label, "titleMenu",
         menu, [
             "",
-            "Start Game", [jump, "new"],
+            "New Game", [jump, "new"],
+            "Continue", [jump, "continue"],
         ],
 
         label, "new",
@@ -65,6 +73,22 @@ function prepareNovel()
         audio, {src: "ilias", format: ["ogg"], action: "play"},
         narrator, "The goddess Ilias suddenly appears before me!",
         ilias, "Oh brave Luka...can you hear my voice?",
+        jump, "IliasMeeting",
+
+        label, "continue",
+        ifStatement, "flip == 0",
+        jsCall, {fcn: toggleDialog, params: []},
+        endIf, "",
+        narrator, "Enter the continue code in the area above.",
+        inputBox, "",
+        ifStatement, "novel.userVar.continueCode >= 0 && novel.userVar.continueCode <= novel_script.length",
+        jsCall, {fcn: loadGame, params: [novel.userVar.continueCode]},
+        narrator, "{{loadTarget}}",
+        //jump, "{{loadTarget}}",
+        elsePart, "",
+        narrator, "That's not a valid code.",
+        jump, "continue",
+        endIf, "",
 
         label, "IliasMeeting",
         hide, ilias,
@@ -163,11 +187,15 @@ function prepareNovel()
     ]; //script
 }
 
+var flip = 0;
 function toggleDialog(){
-    if ($("#dialogDiv").css("opacity") == 0)
+    if ($("#dialogDiv").css("opacity") == 0){
         $("#dialogDiv").css("opacity", "0.75");
-    else
+        flip = 1;
+    } else {
         $("#dialogDiv").css("opacity", "0");
+        flip = 0;
+    }
 }
 
 function sleep(){
@@ -200,4 +228,13 @@ function transEnd(){
     $("#novelDiv").css("-webkit-animation-duration", "2s");
     $("#novelDiv").css("-moz-animation-duration", "2s");
     $("#novelDiv").css("animation-duration", "2s");
+}
+
+function loadGame(target){
+    for (var i = target; i >= 0; i--) {
+        if (novel_script[i] == label) {
+            loadTarget = novel_script[i + 1];
+            break;
+        }
+    }
 }
