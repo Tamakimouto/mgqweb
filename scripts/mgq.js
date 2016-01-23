@@ -12,8 +12,8 @@ var script;
 
 var Luka, Alice, narrator, item;
 var center, upperCenter, left, right;
-var text;
-var loadTarget = "default", input;
+var codeBox;
+var loadTarget, input;
 
 function prepareNovel()
 {
@@ -39,14 +39,22 @@ function prepareNovel()
     item = new Character("", {position: upperCenter});
     inputBox = new Input('continueCode',
                       {
-                          position: center,
-                          width: 0.4,
+                          position: new Position(0.25, 0.6),
+                          width: 0.5,
                           text: "Insert Code Here"
                       });
-    text = new TextBlock("");
+
+    codeBox = new TextBlock("conCode",
+                         {
+                             color: "red",
+                             font: "10pt Serif", align: "center",
+                             width: 0.2,
+                             position: new Position(0, 0)
+                         });
 
     script = [
         label, "start",
+        setVars, "loadTarget = 'start'",
         scene, "title.jpg",
         audio, {src: "title", format: ["ogg"], action: "play"},
 
@@ -57,10 +65,13 @@ function prepareNovel()
             "Continue", [jump, "continue"],
         ],
 
+        /* New Game */
         label, "new",
+        setVars, "loadTarget = 'new'",
         jsCall, {fcn: transStart, params: []},
         audio, {action: "stop"},
         scene, "heaven.jpg",
+        codeBox, "{{loadTarget}}",
         jsCall, {fcn: transEnd, params: []},
         jsCall, {fcn: toggleDialog, params: []},
         narrator, "Where am I...?",
@@ -75,19 +86,18 @@ function prepareNovel()
         ilias, "Oh brave Luka...can you hear my voice?",
         jump, "IliasMeeting",
 
+        /* Continue Code Option */
         label, "continue",
         ifStatement, "flip == 0",
         jsCall, {fcn: toggleDialog, params: []},
         endIf, "",
         narrator, "Enter the continue code in the area above.",
         inputBox, "",
-        ifStatement, "novel.userVar.continueCode >= 0 && novel.userVar.continueCode <= novel_script.length",
-        jsCall, {fcn: loadGame, params: [novel.userVar.continueCode]},
-        narrator, "{{loadTarget}}",
-        //jump, "{{loadTarget}}",
-        elsePart, "",
+        ifStatement, "typeof novel.labels[novel.userVar.continueCode] === 'undefined'",
         narrator, "That's not a valid code.",
         jump, "continue",
+        elsePart, "",
+        jump, "{{novel.userVar.continueCode}}",
         endIf, "",
 
         label, "IliasMeeting",
@@ -214,6 +224,10 @@ function transStart(){
     $("#novelDiv").css("-webkit-animation-duration", "2s");
     $("#novelDiv").css("-moz-animation-duration", "2s");
     $("#novelDiv").css("animation-duration", "2s");
+
+    $("#novelDiv").css("-webkit-animation-delay", "0s");
+    $("#novelDiv").css("-moz-animation-delay", "0s");
+    $("#novelDiv").css("animation-delay", "0s");
 }
 
 function transEnd(){
@@ -228,13 +242,4 @@ function transEnd(){
     $("#novelDiv").css("-webkit-animation-duration", "2s");
     $("#novelDiv").css("-moz-animation-duration", "2s");
     $("#novelDiv").css("animation-duration", "2s");
-}
-
-function loadGame(target){
-    for (var i = target; i >= 0; i--) {
-        if (novel_script[i] == label) {
-            loadTarget = novel_script[i + 1];
-            break;
-        }
-    }
 }
