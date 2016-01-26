@@ -227,7 +227,7 @@ function prepareNovel()
         endIf, "",
 
         label, "reset1",
-        // BLACK BACKGROUND HERE
+        scene, "black.jpg",
         setVars, "novel.userVar.runFlag = 0",
         jsCall, {fcn: toggleDialog, params: []},
         menu, [
