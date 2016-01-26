@@ -223,9 +223,18 @@ function prepareNovel()
         luka, "...Eh?",
         narrator, "Lightning courses through my body, causing me to go into convulsions.",
         narrator, "I slowly lose consciousness.",
+        jump, "reset1",
         endIf, "",
 
-        // RETRY OR TITLE HERE
+        label, "reset1",
+        // BLACK BACKGROUND HERE
+        setVars, "novel.userVar.runFlag = 0",
+        jsCall, {fcn: toggleDialog, params: []},
+        menu, [
+            "",
+            "Retry", [jump, "runVfight"],
+            "Title", [jump, "start"],
+        ],
 
         label, "defendVillage",
         scene, "lukaHouse.jpg",
