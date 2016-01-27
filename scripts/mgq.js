@@ -245,7 +245,7 @@ function prepareNovel()
         scene, "lukaHouse.jpg",
         setVars, "loadTarget = 'defendVillage'",
         codeBox, "Continue Code: {{loadTarget}}",
-        audio, {src: "danger", format: ["ogg"], action: "play"},
+        audio, {src: "danger", format: ["ogg"], action: "play", loop: true},
         ifStatement, "flip == 0",
         jsCall, {fcn: toggleDialog, params: []},
         endIf, "",
