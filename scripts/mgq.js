@@ -12,7 +12,7 @@ var script;
 
 var Luka, Alice, narrator, item;
 var center, upperCenter, left, right;
-var codeBox;
+var codeBox, mSwitch = 0;
 var loadTarget, input;
 
 function prepareNovel()
@@ -82,7 +82,7 @@ function prepareNovel()
         mystery, "Oh brave Luka...",
         narrator, "I hear a beautiful voice begin to call out to me.",
         ilias, {image:"ch/ilias.png", position: center},
-        audio, {src: "ilias", format: ["ogg"], action: "play"},
+        audio, {src: "ilias", format: ["ogg"], action: "play", loop: true},
         narrator, "The goddess Ilias suddenly appears before me!",
         ilias, "Oh brave Luka...can you hear my voice?",
         jump, "IliasMeeting",
@@ -148,7 +148,7 @@ function prepareNovel()
         setVars, "loadTarget = 'freshStart'",
         scene, "lukaHouse.jpg",
         codeBox, "Continue Code: {{loadTarget}}",
-        audio, {src: "iliasville", format: ["ogg"], action: "play"},
+        audio, {src: "iliasville", format: ["ogg"], action: "play", loop: true},
         jsCall, {fcn: transEnd, params: []},
         narrator, "I open my eyes to the soft light of the morning sun coming through the window.",
         narrator, "Was that just a dream...? <br> There's no way that was just a normal dream!",
@@ -162,12 +162,12 @@ function prepareNovel()
         narrator, "I won't be returning to this house for a while. <br> With such a sad thought in my mind, I look around my small home.",
         narrator, "Well, until I defeat the Monster Lord, I won't be coming back here... <br> I better clean you so you look great when I come back!",
         narrator, "I start off by making my bed.",
-        // STEP SOUNDS HERE
+        audio, {src: "se/steps", format: ["ogg"], action: "play", loop: false},
         villager, "He...Help!",
         luka, "Hmm? What was that?",
         narrator, "While making my bed, I hear a man's scream. <br> It sounded like Hans, the lumberjack. <br> What's happening so early in the morning...?",
         hans, "Monster...A monster is in the forest!",
-        audio, {src: "danger", format: ["ogg"], action: "play"},
+        audio, {src: "danger", format: ["ogg"], action: "play", loop: true},
         luka, "W...What!?",
         narrator, "In Ilias Village? How can a monster appear in such a peaceful village...?",
         narrator, "Even though Ilias Village is small, it still has a gigantic temple. <br> The temple where the goddess is revered: Ilias Temple.",
@@ -180,6 +180,7 @@ function prepareNovel()
         narrator, "I haven't ever fought a monster before...in fact, I've never even seen one.",
         narrator, "However, one day I will fight the Monster Lord. <br> If I can't fight a monster of this level, how can I expect to be a Hero!?",
         setVars, "novel.userVar.runFlag = 0",
+        setVars, "mSwitch = 1",
 
         label, "runVfight",
         jsCall, {fcn: toggleDialog, params: []},
@@ -196,7 +197,9 @@ function prepareNovel()
         ifStatement, "flip == 0",
         jsCall, {fcn: toggleDialog, params: []},
         endIf, "",
-        audio, {src: "danger", format: ["ogg"], action: "play"},
+        ifStatement, "mSwitch == 0",
+        audio, {src: "danger", format: ["ogg"], action: "play", loop: true},
+        endIf, "",
         ifStatement, "novel.userVar.runFlag == 0",
         luka, "I...don't want to.",
         narrator, "I muttered softly under my breath.",
@@ -205,9 +208,11 @@ function prepareNovel()
         scene, "heaven.jpg",
         codeBox, "Continue Code: {{loadTarget}}",
         jsCall, {fcn: transEnd, params: []},
+        ilias, {image:"ch/ilias.png", position: center},
         ilias, "Luka...pick up your sword. <br> You must defend your village!",
         jsCall, {fcn: transStart, params: []},
         scene, "lukaHouse.jpg",
+        audio, {src: "danger", format: ["ogg"], action: "play", loop: true},
         codeBox, "Continue Code: {{loadTarget}}",
         jsCall, {fcn: transEnd, params: []},
         luka, "Wh...what was that?",
@@ -219,7 +224,7 @@ function prepareNovel()
         hide, ilias,
         ilias, "It seems as though I made a mistake, Luka.",
         ilias, "You are no hero at all. <br> Receive my judgement.",
-        // BOOM SOUNDS HERE
+        audio, {src: "se/spark", format: ["ogg"], action: "play", loop: false},
         luka, "...Eh?",
         narrator, "Lightning courses through my body, causing me to go into convulsions.",
         narrator, "I slowly lose consciousness.",
