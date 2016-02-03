@@ -58,7 +58,11 @@ function prepareNovel()
         label, "start",
         setVars, "loadTarget = 'start'",
         scene, "title.jpg",
-        audio, {src: "title", format: ["ogg"], action: "play"},
+        audio, {
+            src: "title",
+            format: ["ogg"],
+            action: "play"
+        },
 
         label, "titleMenu",
         menu, [
@@ -74,16 +78,30 @@ function prepareNovel()
         audio, {action: "stop"},
         scene, "heaven.jpg",
         codeBox, "Continue Code: {{loadTarget}}",
-        jsCall, {fcn: transEnd, params: []},
-        jsCall, {fcn: toggleDialog, params: []},
+        jsCall, {
+            fcn: transEnd,
+            params: []
+        },
+        jsCall, {
+            fcn: toggleDialog,
+            params: []
+        },
         narrator, "Where am I...?",
         narrator, "A soft light fills the area, giving the atmosphere a solemn feel.",
         narrator, "...Is this a dream?",
         mystery, "Luka...",
         mystery, "Oh brave Luka...",
         narrator, "I hear a beautiful voice begin to call out to me.",
-        ilias, {image:"ch/ilias.png", position: center},
-        audio, {src: "ilias", format: ["ogg"], action: "play", loop: true},
+        ilias, {
+            image:"ch/ilias.png",
+            position: center
+        },
+        audio, {
+            src: "ilias",
+            format: ["ogg"],
+            action: "play",
+            loop: true
+        },
         narrator, "The goddess Ilias suddenly appears before me!",
         ilias, "Oh brave Luka...can you hear my voice?",
         jump, "IliasMeeting",
@@ -163,7 +181,7 @@ function prepareNovel()
         narrator, "I won't be returning to this house for a while. <br> With such a sad thought in my mind, I look around my small home.",
         narrator, "Well, until I defeat the Monster Lord, I won't be coming back here... <br> I better clean you so you look great when I come back!",
         narrator, "I start off by making my bed.",
-        audio, {src: "se/steps", format: ["ogg"], action: "play", loop: false},
+        audio, {src: "se/steps", format: ["ogg"], action: "play", se: true},
         villager, "He...Help!",
         luka, "Hmm? What was that?",
         narrator, "While making my bed, I hear a man's scream. <br> It sounded like Hans, the lumberjack. <br> What's happening so early in the morning...?",

@@ -663,6 +663,7 @@ function Novel() {
     this.tableau = null;
     this.dialog = null;
     this.audio = null;
+    this.audio2 = null;
     this.audioLoop = false;
     this.paused = false;
     this.history = new Array();
@@ -1364,7 +1365,6 @@ function sub(str)
 
     If the parameter is null, sound is stopped.
 */
-
 function audio(param)
 {
     var audioSource;
@@ -1373,95 +1373,71 @@ function audio(param)
         "ogg": 'audio/ogg;codecs="vorbis"',
         "mp3": "audio/mpeg"};
     var suffix = "";
+    var se = false;
 
-    if (novel.audio)
-    {
-        // stopAudio();
-        if (param != null)
-        {
-            if (param.constructor == String)
-            {
+    if (novel.audio) {
+        if (param != null) {
+            if (param.constructor == String) {
                 audioSource = param;
                 novel.audio.src = novel.audioPath + audioSource;
                 novel.audioLoop = true;
-            }
-            else if (param.constructor == Object)
-            {
-                if (param.src)
-                {
+            } else if (param.constructor == Object) {
+                if (param.src) {
                     audioSource = param.src;
                     // look for a playable format
-                    if (param.format)
-                    {
-                        for (var i = 0; i < param.format.length && suffix == ""; i++)
-                        {
+                    if (param.format) {
+                        for (var i = 0; i < param.format.length && suffix == ""; i++) {
                             if (novel.audio.canPlayType(mimeType[param.format[i]]) != "")
-                            {
                                 suffix = param.format[i];
-                            }
                         }
                     }
-                    if (suffix != "")
-                    {
+
+                    if (param.se != null)
+                        se = param.se;
+
+                    if (suffix != "") {
                         audioSource = audioSource + "." + suffix;
-						novel.audio.src = novel.audioPath + audioSource;
-						novel.audioLoop = true;
-                    }
-					else
-					{
+                        if (!se) {
+						    novel.audio.src = novel.audioPath + audioSource;
+						    novel.audioLoop = true;
+                        } else {
+                            novel.audio2.src = novel.audioPath + audioSource;
+                            novel.audio2.play();
+                            return;
+                        }
+                    } else
 						novel.audio.src = "";
-					}
                 }
+
                 if (param.loop != null)
-                {
                     novel.audioLoop = param.loop;
-                }
+
                 if (param.action)
-                {
                     action = param.action;
-                }
+
             }
-            if (novel.audioLoop)
-            {
+
+            if (novel.audioLoop) {
                 if (novel.audio.addEventListener)
-                {
                     novel.audio.addEventListener('ended', novel_audioLoop, false);
-                }
                 else if (novel.audio.attachEvent)
-                {
                     novel.audio.attachEvent('onended', novel_audioLoop);
-                }
-            }
-            else
-            {
+            } else {
                 if (novel.audio.removeEventListener)
-                {
-                    novel.audio.removeEventListener('ended', novel_audioLoop,
-                    false);
-                }
+                    novel.audio.removeEventListener('ended', novel_audioLoop, false);
                 else if (novel.audio.detachEvent)
-                {
                     novel.audio.detachEvent('onended', novel_audioLoop);
-                }
             }
+
             action = action.replace(/{{(.*?)}}/g, novel_interpolator);
             if (action == "stop")
-            {
                 novel.audio.src = null;
-            }
             else if (action == "rewind")
-            {
                 novel.audio.currentTime = 0;
-            }
             else if (action == "pause")
-            {
                 novel.audio.pause();
-            }
             else if (action == "play")
-            {
                 novel.audio.play();
-            }
-           // novel.audio.play();
         }
     }
 }
@@ -1564,6 +1540,7 @@ function initNovel(w, h)
     if (!!(document.createElement('audio').canPlayType))
     {
         novel.audio = new Audio();
+        novel.audio2 = new Audio();
     }
     else
     {
