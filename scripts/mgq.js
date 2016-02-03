@@ -74,14 +74,9 @@ function prepareNovel()
         /* New Game */
         label, "new",
         setVars, "loadTarget = 'new'",
-        jsCall, {fcn: transStart, params: []},
         audio, {action: "stop"},
         scene, "heaven.jpg",
         codeBox, "Continue Code: {{loadTarget}}",
-        jsCall, {
-            fcn: transEnd,
-            params: []
-        },
         jsCall, {
             fcn: toggleDialog,
             params: []
@@ -160,7 +155,6 @@ function prepareNovel()
         ilias, "But Luka... <br> You, too, have the potential to be able to defeat a Monster Lord!",
         luka, "...Eh? <br> I... I do?",
         ilias, "Now go, Luka! <br> I will always be watching over you....",
-        jsCall, {fcn: transStart, params: []},
         jump, "freshStart",
 
         label, "freshStart",
@@ -168,7 +162,6 @@ function prepareNovel()
         scene, "lukaHouse.jpg",
         codeBox, "Continue Code: {{loadTarget}}",
         audio, {src: "iliasville", format: ["ogg"], action: "play", loop: true},
-        jsCall, {fcn: transEnd, params: []},
         narrator, "I open my eyes to the soft light of the morning sun coming through the window.",
         narrator, "Was that just a dream...? <br> There's no way that was just a normal dream!",
         narrator, "I definitely talked to Ilias!",
@@ -222,18 +215,14 @@ function prepareNovel()
         ifStatement, "novel.userVar.runFlag == 0",
         luka, "I...don't want to.",
         narrator, "I muttered softly under my breath.",
-        jsCall, {fcn: transStart, params: []},
         audio, {src: "ilias", format: ["ogg"], action: "play"},
         scene, "heaven.jpg",
         codeBox, "Continue Code: {{loadTarget}}",
-        jsCall, {fcn: transEnd, params: []},
         ilias, {image:"ch/ilias.png", position: center},
         ilias, "Luka...pick up your sword. <br> You must defend your village!",
-        jsCall, {fcn: transStart, params: []},
         scene, "lukaHouse.jpg",
         audio, {src: "danger", format: ["ogg"], action: "play", loop: true},
         codeBox, "Continue Code: {{loadTarget}}",
-        jsCall, {fcn: transEnd, params: []},
         luka, "Wh...what was that?",
         narrator, "For an instant, I saw a vision flash before my eyes. <br> Was that possibly...Ilias? <br> Is Ilias telling me to fight the monster...?",
         setVars, "novel.userVar.runFlag = 1",
@@ -271,10 +260,8 @@ function prepareNovel()
         luka, "Alright, here I go!",
         narrator, "I grab my sword and dash out of the house.",
         narrator, "The village where I was born and raised... <br> I will defend it!",
-        jsCall, {fcn: transStart, params: []},
         scene, "hometown.jpg",
         codeBox, "Continue Code: {{loadTarget}}",
-        jsCall, {fcn: transEnd, params: []},
         farmer, {image:"ch/man.png", position: center},
         farmer, "Ahh! Run away!",
         man, {image: "ch/man.png", position: center},
@@ -286,7 +273,7 @@ function prepareNovel()
 var flip = 0;
 function toggleDialog(){
     if ($("#dialogDiv").css("opacity") == 0){
-        $("#dialogDiv").css("opacity", "0.75");
+        $("#dialogDiv").css("opacity", "1");
         flip = 1;
     } else {
         $("#dialogDiv").css("opacity", "0");
