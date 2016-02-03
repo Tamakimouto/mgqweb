@@ -1160,58 +1160,46 @@ function novel_changeBackground(param, clearAll)
     var targetAlpha = 1.0;
     var bg;
 
-    if (clearAll)
-    {
+    if (clearAll) {
         clearTableau();
         clearDialog();
     }
+
     fileName = novel.backgroundImage[novel.activeBG];
-    if (typeof param == "string")
-    {
+    if (typeof param == "string") {
         fileName = param;
-        effect = "";
-    }
-    else if (param != null)
-    {
+        effect = "fade";
+    } else if (param != null) {
         if (param.image)
-        {
             fileName = param.image;
-        }
+
         effect = (param.effect) ? param.effect : "";
 
 		if (param.alpha)
-		{
 			targetAlpha = param.alpha;
-		}
     }
 
     fileName = fileName.replace(/{{(.*?)}}/g, novel_interpolator);
-    if (!effect)
-    {
+    if (!effect) {
         novel.backgroundImage[novel.activeBG] = fileName;
         bg = document.getElementById("background" + novel.activeBG);
         bg.src = novel.imagePath + fileName;
         novel.pendingBackgroundImage = bg;
         novel.paused = true;
-    }
-    else if (effect == "fade")
-    {
+    } else if (effect == "fade") {
         novel.backgroundImage[novel.activeBG] = fileName;
         novel.paused = true;
         novel_fadeBgOut(targetAlpha);
-    }
-    else if (effect == "dissolve")
-    {
+    } else if (effect == "dissolve") {
         novel.backgroundImage[1 - novel.activeBG] = fileName;
         novel.pendingBackgroundImage = document.getElementById("background" + (1 - novel.activeBG));
         novel.pendingBackgroundImage.src =
             novel.imagePath + fileName;
         novel.paused = true;
     }
+
     if (effect != "fade")
-    {
         setTimeout('novel_finishLoadingBackground("' + effect + '", ' + targetAlpha + ')', 30);
-    }
 }
 
 /*
