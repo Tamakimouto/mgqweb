@@ -73,9 +73,9 @@ body {
     -moz-animation-duration:1s;
     animation-duration:1s;
 
-    -webkit-animation-delay: 2.2s;
-    -moz-animation-delay:2.2s;
-    animation-delay: 1.8s;
+    -webkit-animation-delay: 1.2s;
+    -moz-animation-delay:1.2s;
+    animation-delay: 1.0s;
 }
 
 #dialogDiv {
@@ -83,9 +83,9 @@ body {
     font-size: 20px;
     position: absolute;
     width: 790px;
-    height: 120px;
+    height: 115px;
     background-color: rgba(0, 0, 0, 0);
-    background-image: url("../img/dialog.png");
+    background-image: url("../img/dialog2.png");
     background-repeat: no-repeat;
     background-position: center;
     top: 450px;
