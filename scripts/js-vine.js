@@ -212,7 +212,7 @@ Character.prototype.say = function(str)
     }
 
     if (this.name != "") {
-        htmlStr += '<span style="color: ' + this.color + '">' +
+        htmlStr += '<span style="color: ' + this.color + '">&zwnj;  ' +
         this.name + ':</span><br />';
     } else
         htmlStr += "<br>";
@@ -221,8 +221,29 @@ Character.prototype.say = function(str)
         str = str.replace(/{{(.*?)}}/g, novel_interpolator);
 
     htmlStr += str;
-    novel.dialog.innerHTML = '<div style="padding-left: 10px">' + htmlStr + '</div>';
+    htmlStr = '<div style="padding-left: 10px">' + htmlStr + '</div>';
+    printDialog(htmlStr);
     novel.paused = true;
+}
+
+function printDialog(str) {
+    var index = 0;
+    novel.allowClick = 0;
+    var timer = setInterval(function() {
+        var char = str.charAt(index);
+
+        if (char === '<')
+            index = str.indexOf('>', index);
+
+        if (char === '&')
+            index = str.indexOf(':', index);
+
+        novel.dialog.innerHTML = str.substr(0,index);
+        if (index++ === str.length){
+            clearInterval(timer);
+            novel.allowClick = 1;
+        }
+    }, 15);
 }
 
 /*
@@ -678,6 +699,7 @@ function Novel() {
     this.pauseTimer = null;
     this.mappedImage = null;
     this.lastClick = new Date().getTime();
+    this.allowClick = 1;
 }
 
 /*
@@ -896,10 +918,11 @@ function novel_handleClick(evt)
     }
     /*
         Don't allow two clicks within 1/4 second of each other
+        And Wait for dialog to finish typing
     */
     ok = (now - novel.lastClick > 250);
     novel.lastClick = now;
-    if (ok)
+    if (ok && novel.allowClick)
     {
         playNovel();
     }
