@@ -221,7 +221,7 @@ Character.prototype.say = function(str)
         str = str.replace(/{{(.*?)}}/g, novel_interpolator);
 
     htmlStr += str;
-    novel.dialog.innerHTML = htmlStr;
+    novel.dialog.innerHTML = '<div style="padding-left: 10px">' + htmlStr + '</div>';
     novel.paused = true;
 }
 
