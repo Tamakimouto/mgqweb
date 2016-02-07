@@ -75,7 +75,7 @@ function prepareNovel()
         label, "new",
         setVars, "loadTarget = 'new'",
         audio, {action: "stop"},
-        scene, "heaven.jpg",
+        scene, {image: "heaven.jpg", effect: "fade"},
         codeBox, "Continue Code: {{loadTarget}}",
         jsCall, {
             fcn: toggleDialog,
@@ -104,7 +104,10 @@ function prepareNovel()
         /* Continue Code Option */
         label, "continue",
         ifStatement, "flip == 0",
-        jsCall, {fcn: toggleDialog, params: []},
+        jsCall, {
+            fcn: toggleDialog,
+            params: []
+        },
         endIf, "",
         narrator, "Enter the continue code in the area above.",
         inputBox, "",
@@ -117,7 +120,10 @@ function prepareNovel()
 
         label, "IliasMeeting",
         hide, ilias,
-        jsCall, {fcn: toggleDialog, params: []},
+        jsCall, {
+            fcn: toggleDialog,
+            params: []
+        },
         menu, [
             "",
             "I can!", [jump, "confirmVoice"],
@@ -159,9 +165,17 @@ function prepareNovel()
 
         label, "freshStart",
         setVars, "loadTarget = 'freshStart'",
-        scene, "lukaHouse.jpg",
+        scene, {
+            image: "lukaHouse.jpg",
+            effect: "fade"
+        },
         codeBox, "Continue Code: {{loadTarget}}",
-        audio, {src: "iliasville", format: ["ogg"], action: "play", loop: true},
+        audio, {
+            src: "iliasville",
+            format: ["ogg"],
+            action: "play",
+            loop: true
+        },
         narrator, "I open my eyes to the soft light of the morning sun coming through the window.",
         narrator, "Was that just a dream...? <br> There's no way that was just a normal dream!",
         narrator, "I definitely talked to Ilias!",
@@ -174,12 +188,22 @@ function prepareNovel()
         narrator, "I won't be returning to this house for a while. <br> With such a sad thought in my mind, I look around my small home.",
         narrator, "Well, until I defeat the Monster Lord, I won't be coming back here... <br> I better clean you so you look great when I come back!",
         narrator, "I start off by making my bed.",
-        audio, {src: "se/steps", format: ["ogg"], action: "play", se: true},
+        audio, {
+            src: "se/steps",
+            format: ["ogg"],
+            action: "play",
+            se: true
+        },
         villager, "He...Help!",
         luka, "Hmm? What was that?",
         narrator, "While making my bed, I hear a man's scream. <br> It sounded like Hans, the lumberjack. <br> What's happening so early in the morning...?",
         hans, "Monster...A monster is in the forest!",
-        audio, {src: "danger", format: ["ogg"], action: "play", loop: true},
+        audio, {
+            src: "danger",
+            format: ["ogg"],
+            action: "play",
+            loop: true
+        },
         luka, "W...What!?",
         narrator, "In Ilias Village? How can a monster appear in such a peaceful village...?",
         narrator, "Even though Ilias Village is small, it still has a gigantic temple. <br> The temple where the goddess is revered: Ilias Temple.",
@@ -195,7 +219,10 @@ function prepareNovel()
         setVars, "mSwitch = 1",
 
         label, "runVfight",
-        jsCall, {fcn: toggleDialog, params: []},
+        jsCall, {
+            fcn: toggleDialog,
+            params: []
+        },
         menu, [
             "",
             "Fight", [jump, "defendVillage"],
@@ -203,25 +230,53 @@ function prepareNovel()
         ],
 
         label, "hideVillage",
-        scene, "lukaHouse.jpg",
+        scene, {
+            image: "lukaHouse.jpg",
+            effect: ""
+        },
         setVars, "loadTarget = 'hideVillage'",
         codeBox, "Continue Code: {{loadTarget}}",
         ifStatement, "flip == 0",
-        jsCall, {fcn: toggleDialog, params: []},
+        jsCall, {
+            fcn: toggleDialog,
+            params: []
+        },
         endIf, "",
         ifStatement, "mSwitch == 0",
-        audio, {src: "danger", format: ["ogg"], action: "play", loop: true},
+        audio, {
+            src: "danger",
+            format: ["ogg"],
+            action: "play",
+            loop: true
+        },
         endIf, "",
         ifStatement, "novel.userVar.runFlag == 0",
         luka, "I...don't want to.",
         narrator, "I muttered softly under my breath.",
-        audio, {src: "ilias", format: ["ogg"], action: "play"},
-        scene, "heaven.jpg",
+        audio, {
+            src: "ilias",
+            format: ["ogg"],
+            action: "play"
+        },
+        scene, {
+            image: "heaven.jpg",
+            effect: "fade"
+        },
         codeBox, "Continue Code: {{loadTarget}}",
-        ilias, {image:"ch/ilias.png", position: center},
+        ilias, {
+            image:"ch/ilias.png",
+            position: center
+        },
         ilias, "Luka...pick up your sword. <br> You must defend your village!",
-        scene, "lukaHouse.jpg",
-        audio, {src: "danger", format: ["ogg"], action: "play", loop: true},
+        scene, {
+            image: "lukaHouse.jpg",
+            effect: "fade"
+        },
+        audio, {
+            src: "danger",
+            format: ["ogg"],
+            action: "play",
+            loop: true},
         codeBox, "Continue Code: {{loadTarget}}",
         luka, "Wh...what was that?",
         narrator, "For an instant, I saw a vision flash before my eyes. <br> Was that possibly...Ilias? <br> Is Ilias telling me to fight the monster...?",
@@ -232,7 +287,12 @@ function prepareNovel()
         hide, ilias,
         ilias, "It seems as though I made a mistake, Luka.",
         ilias, "You are no hero at all. <br> Receive my judgement.",
-        audio, {src: "se/spark", format: ["ogg"], action: "play", loop: false},
+        audio, {
+            src: "se/spark",
+            format: ["ogg"],
+            action: "play",
+            loop: false
+        },
         luka, "...Eh?",
         narrator, "Lightning courses through my body, causing me to go into convulsions.",
         narrator, "I slowly lose consciousness.",
@@ -242,7 +302,10 @@ function prepareNovel()
         label, "reset1",
         scene, "black.jpg",
         setVars, "novel.userVar.runFlag = 0",
-        jsCall, {fcn: toggleDialog, params: []},
+        jsCall, {
+            fcn: toggleDialog,
+            params: []
+        },
         menu, [
             "",
             "Retry", [jump, "runVfight"],
@@ -253,19 +316,37 @@ function prepareNovel()
         scene, "lukaHouse.jpg",
         setVars, "loadTarget = 'defendVillage'",
         codeBox, "Continue Code: {{loadTarget}}",
-        audio, {src: "danger", format: ["ogg"], action: "play", loop: true},
+        audio, {
+            src: "danger",
+            format: ["ogg"],
+            action: "play",
+            loop: true
+        },
         ifStatement, "flip == 0",
-        jsCall, {fcn: toggleDialog, params: []},
+        jsCall, {
+            fcn: toggleDialog,
+            params: []
+        },
         endIf, "",
         luka, "Alright, here I go!",
         narrator, "I grab my sword and dash out of the house.",
         narrator, "The village where I was born and raised... <br> I will defend it!",
         scene, "hometown.jpg",
         codeBox, "Continue Code: {{loadTarget}}",
-        farmer, {image:"ch/man.png", position: center},
+        farmer, {
+            image:"ch/man.png",
+            position: center
+        },
         farmer, "Ahh! Run away!",
-        man, {image: "ch/man.png", position: center},
+        man, {
+            image: "ch/man.png",
+            position: center
+        },
         man, "Ahh! What should I do!?",
+        hide, man,
+        hide, farmer,
+        narrator, "The village has fallen into chaos. <br> The villagers were working the fields are all rushing back into their homes.",
+        narrator, "Running against the wave of people, I head towards the village entrance. <br> While pushing past the flood of people, I hear the booming voice of Betty, the old lady next door.",
 
     ]; //script
 }

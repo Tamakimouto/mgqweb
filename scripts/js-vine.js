@@ -397,9 +397,7 @@ function novel_textEntity_display(obj, param)
 TextBlock.prototype.show = function(visible)
 {
     if (this.domRef)
-    {
         this.domRef.style.visibility = (visible) ? "visible" : "hidden";
-    }
 }
 
 /**
@@ -490,8 +488,7 @@ Input.prototype.display = function(param)
         If the <input> isn't in the DOM yet, insert it,
         and add it to the list of actors in the tableau.
     */
-    if (this.domRef == null)
-    {
+    if (this.domRef == null) {
         novel.tableau.appendChild(this.inputElement);
         novel.actors.push(this);
     }
@@ -528,9 +525,7 @@ function novel_inputChange(evt)
     var str;
     var actor;
     if (!evt)
-    {
         evt = window.event;
-    }
     inputObj = evt.target;
     str = inputObj.value;
     str = str.replace(/&/g, '&amp;');
@@ -540,16 +535,12 @@ function novel_inputChange(evt)
 
     evt.cancelBubble = true;
     if (evt.stopPropagation)
-    {
         evt.stopPropagation();
-    }
     novel.ignoreClicks = false;
     actor = novel.actors.pop();
     inputObj = actor.domRef;
     if (inputObj != null)
-    {
         inputObj.parentNode.removeChild(inputObj);
-    }
     actor.domRef = null;
     playNovel();
 }
@@ -713,25 +704,17 @@ function novel_clearMenuItems()
     var actor;
     var domObject;
     var i;
-    if (novel)
-    {
+    if (novel) {
         i = 0;
-        while (i < novel.actors.length)
-        {
-            if (novel.actors[i].constructor == MenuItem)
-            {
+        while (i < novel.actors.length) {
+            if (novel.actors[i].constructor == MenuItem) {
                 domObject = novel.actors[i].domRef;
                 if (domObject != null)
-                {
                     domObject.parentNode.removeChild(domObject);
-                }
                 novel.actors[i].domRef = null;
                 novel.actors.splice(i, 1);
-            }
-            else
-            {
+            } else
                 i++;
-            }
         }
     }
 }
@@ -755,14 +738,10 @@ function novel_addOnClick(el, value)
 function novel_menuJump(menuScript, evt)
 {
     if (!evt)
-    {
         evt = window.event;
-    }
     evt.cancelBubble = true;
     if (evt.stopPropagation)
-    {
         evt.stopPropagation();
-    }
     novel_clearMenuItems();
     novel.dialog.style.textAlign = "left";
     novel.ignoreClicks = false;
@@ -785,11 +764,8 @@ function novel_fadeBgOut(targetAlpha)
     bg.style.filter = "alpha(opacity=" + Math.floor(novel.bgAlpha*100) + ")";
     bg.style.opacity = novel.bgAlpha;
     if (novel.bgAlpha > 0)
-    {
         setTimeout("novel_fadeBgOut(" + targetAlpha + ")", 100);
-    }
-    else
-    {
+    else {
         bg.src = novel.imagePath + novel.backgroundImage[novel.activeBG];
         novel.pendingBackgroundImage = bg;
         novel.paused = true;
@@ -806,15 +782,12 @@ function novel_fadeBgIn(targetAlpha)
 {
     var bg = document.getElementById("background" + novel.activeBG);
     novel.bgAlpha += 0.1;
-    if (novel.bgAlpha < targetAlpha)
-    {
+    if (novel.bgAlpha < targetAlpha) {
         bg.style.filter = "alpha(opacity=" +
             Math.floor(novel.bgAlpha*100) + ")";
         bg.style.opacity = novel.bgAlpha;
         setTimeout("novel_fadeBgIn(" + targetAlpha + ")", 100);
-    }
-    else
-    {
+    } else {
         novel_setAlpha(bg, targetAlpha);
         novel.bgAlpha = targetAlpha;
         playNovel();
@@ -834,11 +807,8 @@ function novel_dissolveIn(targetAlpha, n)
     novel_setAlpha(bgA, novel.bgAlpha * (10 - n) / 10);
     novel_setAlpha(bgB, targetAlpha * n / 10);
     if (n < 10)
-    {
         setTimeout("novel_dissolveIn(" + targetAlpha + "," + n + ")", 100);
-    }
-    else
-    {
+    else {
         novel_setAlpha(bgA, 0);
         novel_setAlpha(bgB, targetAlpha);
         novel.activeBG = 1 - novel.activeBG;
@@ -1169,7 +1139,7 @@ function novel_changeBackground(param, clearAll)
     fileName = novel.backgroundImage[novel.activeBG];
     if (typeof param == "string") {
         fileName = param;
-        effect = "fade";
+        effect = "";
     } else if (param != null) {
         if (param.image)
             fileName = param.image;
