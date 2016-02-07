@@ -214,7 +214,8 @@ Character.prototype.say = function(str)
     if (this.name != "") {
         htmlStr += '<span style="color: ' + this.color + '">' +
         this.name + ':</span><br />';
-    }
+    } else
+        htmlStr += "<br>";
 
     if (str.indexOf("{{") >= 0)
         str = str.replace(/{{(.*?)}}/g, novel_interpolator);
