@@ -12,10 +12,13 @@ for (var i = 0; i < preload.length; i++) {
 var script;
 
 var Luka, Alice, narrator, item;
-var center, upperCenter, left, right;
+var center, upperCenter, left, right, monDefault;
 var codeBox, mSwitch = 0;
 var loadTarget, input;
+
 var hans, farmer, child, mystery, woman, betty;
+
+var slime;
 
 function prepareNovel()
 {
@@ -23,7 +26,6 @@ function prepareNovel()
     novel.audioPath = "ost/";
 
     luka = new Character("Luka", {color: "rgb(169, 131, 189)"});
-    alice = new Character("Alice", {color: "rgb(94, 86, 106)"});
     ilias = new Character("Ilias", {color: "rgb(255, 247, 214)"});
     villager = new Character("Villager", {color: "rgb(168, 30, 200)"});
     woman = new Character("Woman", {color: "pink"});
@@ -34,11 +36,15 @@ function prepareNovel()
     narrator = new Character("");
     mystery = new Character("???");
 
+    alice = new Character("Alice", {color: "rgb(94, 86, 106)"});
+    slime = new Character("Slime Girl", {color: "rgb(120, 42, 100)"});
+
     center = new Position(0.0, 0.0, 0.0, 0.0);
     upperCenter = new Position(0.5, 0.3, 0.5, 0.5);
     left = new Position(0.1, 0.7, 0.5, 0.5);
     right = new Position(0.9, 0.7, 0.5, 0.5);
-
+    monDefault = new Position(0.5, 0.5, 0.5, 0.5);
+    
     item = new Character("", {position: upperCenter});
     inputBox = new Input('continueCode',
                       {
@@ -165,6 +171,16 @@ function prepareNovel()
         narrator, "Lightning courses through my body, burning me all over.",
         narrator, "My consciousness slowly begins to fade...",
         jump, "reset1",
+
+        label, "reset2",
+        scene, {image: "black.jpg", effect: "fade"},
+        setVars, "novel.userVar.runFlag = 0",
+        jsCall, {fcn: toggleDialog, params: []},
+        menu, [
+            "",
+            "Retry", [jump, "ignoreVoice"],
+            "Title", [jump, "start"],
+        ],
 
         label, "confirmVoice",
         show, ilias,
@@ -341,13 +357,79 @@ function prepareNovel()
         codeBox, "Continue Code: {{loadTarget}}",
         farmer, {image:"ch/man.png", position: center},
         farmer, "Ahh! Run away!",
-        man, {image: "ch/man.png", position: center},
+        hide, farmer,
+        man, {image: "ch/youngan.png", position: center},
         man, "Ahh! What should I do!?",
         hide, man,
-        hide, farmer,
         narrator, "The village has fallen into chaos. <br> The villagers were working the fields are all rushing back into their homes.",
         narrator, "Running against the wave of people, I head towards the village entrance. <br> While pushing past the flood of people, I hear the booming voice of Betty, the old lady next door.",
+        betty, {image: "ch/obasan.png", position: center},
+        betty, "Stop, Luka! <br> Leave the monster to the soldiers at Ilias Temple!",
+        luka, "It's ok, Betty...I'm a Hero!",
+        betty, "'Hero', you say? You haven't even been baptized yet! <br> Come back here, don't go!",
+        narrator, "It's true that I haven't received the baptism yet, and am not formally a Hero...",
+        narrator, "But even so, I should be able to defeat a low level monster!",
+        hide, betty,
+        narrator, "Running past Betty, I continue through the village. <br> Finally, I reach the forest outside the village!",
 
+        label, "sliEncounter",
+        audio, {
+            src: "danger",
+            format: ["ogg"],
+            action: "play",
+            loop: true
+        },
+        scene, {image: "woods.jpg", effect: "fade"},
+        audio, {
+            src: "se/steps",
+            format: ["ogg"],
+            action: "play",
+            se: true
+        },
+        narrator, "I head off from the main road into the forest. <br> I stop running and look around the area.",
+        luka, "Where are you, monster?",
+        narrator, "Looking around at the eerily quiet forest, I begin to doubt rushing in with no information. <br> Perhaps I shouldn't have just blindly jumped into the forest...",
+        narrator, "As I look around at my surroundings, I hear a noise come from behind me.",
+        narrator, "Suddenly, a monster appears!",
+        slime, {image: "ch/slime1.png", position: monDefault},
+        audio, {
+            src: "encounter",
+            format: ["ogg"],
+            action: "play",
+            loop: false
+        },
+        narrator, "A Slime Girl appeared!",
+        audio, {
+            src: "battle",
+            format: ["ogg"],
+            action: "play",
+            loop: true
+        },
+        slime, "Hahaha, a delicious looking boy showed up!",
+        narrator, "The slime giggles as I stumble backwards, startled at her sudden appearance.",
+        narrator, "Her viscous body jiggles as she laughs.",
+        luka, "So this... is a monster.",
+        narrator, "As I stare into the monster's eyes, my body feels paralyzed. <br> It's my first time seeing an actual monster in person after all. <br> It looks powerful... and strange... and surprisigly cute.",
+        narrator, "Her body jiggles around with every movement she makes... it's nothing like a human.",
+        narrator, "Can I really beat this thing? <br> All the confidence I had while rushing through the village starts to dissipate.",
+        slime, "Ararara? <br> Am I the first monster you've seen by any chance?",
+        luka, ".............",
+        narrator, "Even though she guessed it right, I don't respond. <br> I don't want her to think I'm scared. <br> I grip my sword tighter to stop my hands from shaking.",
+        luka, "Um.... <br> You're pretty close to a human village, you know? <br> Could you please go away?",
+        narrator, "With my sword in front of me, I timidly try to talk to the slime. <br> There's no reason to be scared of it... hopefully.",
+        narrator, "If I reason with her, I'm sure she'll understand. <br> Even if my enemy is a monster, I don't want a pointless fight.",
+        luka, "Everyone in the village is scared of you... <br> But if you don't mean to harm anyone...",
+        slime, "Hahaha, are you a pacifist or something? <br> I'm too hungry to go away, so there's no point asking me to leave.",
+        slime, "Or... are you willing to treat me to some of your milk?",
+        luka, "Uh...that... I can't do.",
+        narrator, "Many monsters eat men's semen as food. <br> However, it is a serious taboo to give semen to a monster.",
+        narrator, "One of Ilias' five commandments forbids sexual relations between human and monster. <br> Breaking this commandment brings about horrible consequences...",
+        luka, "One of Ilias' five commandments forbids it, so I can't let you have any of my energy.",
+        slime, "Well then... I guess I'll just have to forcibly squeeze it out of you!",
+        luka, "Geh...",
+        narrator, "It looks like I can't avoid fighting her.",
+        narrator, "As I grip my sword tighter....",
+        scene, {image: "heaven.jpg", effect: "dissolve"},
     ]; //script
 }
 
