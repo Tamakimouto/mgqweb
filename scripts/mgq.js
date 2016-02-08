@@ -44,7 +44,7 @@ function prepareNovel()
     left = new Position(0.1, 0.7, 0.5, 0.5);
     right = new Position(0.9, 0.7, 0.5, 0.5);
     monDefault = new Position(0.5, 0.5, 0.5, 0.5);
-    
+
     item = new Character("", {position: upperCenter});
     inputBox = new Input('continueCode',
                       {
