@@ -15,6 +15,7 @@ var Luka, Alice, narrator, item;
 var center, upperCenter, left, right;
 var codeBox, mSwitch = 0;
 var loadTarget, input;
+var hans, farmer, child, mystery, woman, betty;
 
 function prepareNovel()
 {
@@ -120,10 +121,7 @@ function prepareNovel()
 
         label, "IliasMeeting",
         hide, ilias,
-        jsCall, {
-            fcn: toggleDialog,
-            params: []
-        },
+        jsCall, {fcn: toggleDialog, params: []},
         menu, [
             "",
             "I can!", [jump, "confirmVoice"],
@@ -132,8 +130,41 @@ function prepareNovel()
         ],
 
         label, "denyVoice",
+        show, ilias,
+        jsCall, {fcn: toggleDialog, params: []},
+        ilias, "............... <br> Then why did you respond?",
+        luka, "................",
+        narrator, "She got me there...",
+        jump, "confirm2",
 
         label, "ignoreVoice",
+        ilias, {image:"ch/ilias2.png", position: center},
+        show, ilias,
+        jsCall, {fcn: toggleDialog, params: []},
+        ilias, ".............",
+        luka, ".............",
+        ilias, "If you ignore me, I shall pass judgement on you. <br> Do you understand?",
+        jsCall, {fcn: toggleDialog, params: []},
+        hide, ilias,
+        menu, [
+            "",
+            "Sorry", [jump, "confirm2"],
+            ".....", [jump, "ignore2"],
+        ],
+
+        label, "ignore2",
+        show, ilias,
+        jsCall, {fcn: toggleDialog, params: []},
+        ilias, "......",
+        audio, {
+            src: "se/spark",
+            format: ["ogg"],
+            action: "play",
+            loop: false
+        },
+        narrator, "Lightning courses through my body, burning me all over.",
+        narrator, "My consciousness slowly begins to fade...",
+        jump, "reset1",
 
         label, "confirmVoice",
         show, ilias,
@@ -143,6 +174,7 @@ function prepareNovel()
         narrator, "The goddess whom created the world, who extends her love to Humanity.",
         narrator, "With such an amazing figure appearing before me, it makes me want to dance!",
         narrator, "Even if it's just a dream...",
+        label, "confirm2",
         ilias, "Many, many years ago, in a time man cannot comprehend, I created this world.",
         ilias, "First was the earth, sky and sea. <br> Then the animals, birds, and insects. <br> Finally, I created Humanity.",
         ilias, "Howver, I am not perfect. <br> While creating Humanity, I also had many failures...",
@@ -165,10 +197,7 @@ function prepareNovel()
 
         label, "freshStart",
         setVars, "loadTarget = 'freshStart'",
-        scene, {
-            image: "lukaHouse.jpg",
-            effect: "fade"
-        },
+        scene, {image: "lukaHouse.jpg", effect: "fade"},
         codeBox, "Continue Code: {{loadTarget}}",
         audio, {
             src: "iliasville",
@@ -219,10 +248,7 @@ function prepareNovel()
         setVars, "mSwitch = 1",
 
         label, "runVfight",
-        jsCall, {
-            fcn: toggleDialog,
-            params: []
-        },
+        jsCall, {fcn: toggleDialog, params: []},
         menu, [
             "",
             "Fight", [jump, "defendVillage"],
@@ -230,17 +256,11 @@ function prepareNovel()
         ],
 
         label, "hideVillage",
-        scene, {
-            image: "lukaHouse.jpg",
-            effect: ""
-        },
+        scene, {image: "lukaHouse.jpg", effect: ""},
         setVars, "loadTarget = 'hideVillage'",
         codeBox, "Continue Code: {{loadTarget}}",
         ifStatement, "flip == 0",
-        jsCall, {
-            fcn: toggleDialog,
-            params: []
-        },
+        jsCall, {fcn: toggleDialog, params: []},
         endIf, "",
         ifStatement, "mSwitch == 0",
         audio, {
@@ -258,25 +278,17 @@ function prepareNovel()
             format: ["ogg"],
             action: "play"
         },
-        scene, {
-            image: "heaven.jpg",
-            effect: "fade"
-        },
+        scene, {image: "heaven.jpg", effect: "fade"},
         codeBox, "Continue Code: {{loadTarget}}",
-        ilias, {
-            image:"ch/ilias.png",
-            position: center
-        },
+        ilias, {image:"ch/ilias.png", position: center},
         ilias, "Luka...pick up your sword. <br> You must defend your village!",
-        scene, {
-            image: "lukaHouse.jpg",
-            effect: "fade"
-        },
+        scene, {image: "lukaHouse.jpg", effect: "fade"},
         audio, {
             src: "danger",
             format: ["ogg"],
             action: "play",
-            loop: true},
+            loop: true
+        },
         codeBox, "Continue Code: {{loadTarget}}",
         luka, "Wh...what was that?",
         narrator, "For an instant, I saw a vision flash before my eyes. <br> Was that possibly...Ilias? <br> Is Ilias telling me to fight the monster...?",
@@ -300,12 +312,9 @@ function prepareNovel()
         endIf, "",
 
         label, "reset1",
-        scene, "black.jpg",
+        scene, {image: "black.jpg", effect: "fade"},
         setVars, "novel.userVar.runFlag = 0",
-        jsCall, {
-            fcn: toggleDialog,
-            params: []
-        },
+        jsCall, {fcn: toggleDialog, params: []},
         menu, [
             "",
             "Retry", [jump, "runVfight"],
@@ -323,25 +332,16 @@ function prepareNovel()
             loop: true
         },
         ifStatement, "flip == 0",
-        jsCall, {
-            fcn: toggleDialog,
-            params: []
-        },
+        jsCall, {fcn: toggleDialog, params: []},
         endIf, "",
         luka, "Alright, here I go!",
         narrator, "I grab my sword and dash out of the house.",
         narrator, "The village where I was born and raised... <br> I will defend it!",
         scene, "hometown.jpg",
         codeBox, "Continue Code: {{loadTarget}}",
-        farmer, {
-            image:"ch/man.png",
-            position: center
-        },
+        farmer, {image:"ch/man.png", position: center},
         farmer, "Ahh! Run away!",
-        man, {
-            image: "ch/man.png",
-            position: center
-        },
+        man, {image: "ch/man.png", position: center},
         man, "Ahh! What should I do!?",
         hide, man,
         hide, farmer,
