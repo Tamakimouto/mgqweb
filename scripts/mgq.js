@@ -1,6 +1,7 @@
 var imgNames = [
     "title.jpg", "black.jpg", "heaven.jpg", "hometown.jpg", "inn.jpg", "woods.jpg",
-    "lukaHouse.jpg", "dialog.png", "hometown.jpg"
+    "lukaHouse.jpg", "dialog.png", "hometown.jpg", "man.png", "slime1.png", "youngan.png",
+    "obasan.png", "ilias.png"
 ];
 
 var preload = new Array(imgNames.length);
