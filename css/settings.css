@@ -1,3 +1,8 @@
+@font-face {
+    font-family: gothic;
+    src: url(../font/MSGothic2.ttf);
+}
+
 body {
     background-color: rgba(27, 27, 27, 1);
     text-align: center;
@@ -15,6 +20,8 @@ body {
     background-image: url("../img/page/bg.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+    font-family: gothic;
+    font-size: 22px;
 }
 
 .bg {
@@ -107,8 +114,9 @@ body {
 }
 
 #dialogDiv {
-    font-family: "DeJaVu Serif", Helvetica, Arial, sans-serif;
+    font-family: gothic;
     font-size: 20px;
+    text-shadow: 1px 2px black;
     position: absolute;
     width: 790px;
     height: 115px;
@@ -134,7 +142,7 @@ body {
     top: 50%;
     text-align: center;
     color: white;
-    font-family: "DeJaVu Serif", Helvetica, Arial, sans-serif;
+    font-family: gothic;
     font-size: 15px;
 }
 
