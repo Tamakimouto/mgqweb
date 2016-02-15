@@ -34,6 +34,7 @@ function prepareNovel()
     farmer = new Character("Farmer", {color: "blue"});
     child = new Character("Child", {color: "rgb(34, 76, 80)"});
     hans = new Character("Hans", {color: "blue"});
+    betty = new Character("Betty", {color: "pink"});
     narrator = new Character("");
     mystery = new Character("???");
 
