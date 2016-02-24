@@ -47,7 +47,7 @@ function prepareNovel()
     right = new Position(0.9, 0.7, 0.5, 0.5);
     monDefault = new Position(0.5, 0.5, 0.5, 0.5);
 
-    item = new Character("", {position: upperCenter});
+v    item = new Character("", {position: upperCenter});
     inputBox = new Input('continueCode',
                       {
                           position: new Position(0.25, 0.6),
@@ -432,6 +432,7 @@ function prepareNovel()
         narrator, "It looks like I can't avoid fighting her.",
         narrator, "As I grip my sword tighter....",
         scene, {image: "heaven.jpg", effect: "dissolve"},
+        ilias, {},
     ]; //script
 }
 
