@@ -432,7 +432,7 @@ v    item = new Character("", {position: upperCenter});
         narrator, "It looks like I can't avoid fighting her.",
         narrator, "As I grip my sword tighter....",
         scene, {image: "heaven.jpg", effect: "dissolve"},
-        ilias, {},
+        ilias, {image:"ch/ilias.png", position: center},
     ]; //script
 }
 
