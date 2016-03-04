@@ -47,7 +47,7 @@ function prepareNovel()
     right = new Position(0.9, 0.7, 0.5, 0.5);
     monDefault = new Position(0.5, 0.5, 0.5, 0.5);
 
-v    item = new Character("", {position: upperCenter});
+    item = new Character("", {position: upperCenter});
     inputBox = new Input('continueCode',
                       {
                           position: new Position(0.25, 0.6),
@@ -433,6 +433,7 @@ v    item = new Character("", {position: upperCenter});
         narrator, "As I grip my sword tighter....",
         scene, {image: "heaven.jpg", effect: "dissolve"},
         ilias, {image:"ch/ilias.png", position: center},
+        
     ]; //script
 }
 
