@@ -213,9 +213,9 @@ Character.prototype.say = function(str)
 
     if (this.name != "") {
         htmlStr += '<span style="color: ' + this.color + '">&zwnj;  ' +
-        this.name + ':</span><br />';
+        this.name + ':</span><br /><br>';
     } else
-        htmlStr += "<br>";
+        htmlStr += "<br><br>";
 
     if (str.indexOf("{{") >= 0)
         str = str.replace(/{{(.*?)}}/g, novel_interpolator);
@@ -226,6 +226,7 @@ Character.prototype.say = function(str)
     novel.paused = true;
 }
 
+var instantText = false;
 function printDialog(str) {
     var index = 0;
     novel.allowClick = 0;
@@ -237,6 +238,11 @@ function printDialog(str) {
 
         if (char === '&')
             index = str.indexOf(':', index);
+
+        if (instantText){
+            instantText = false;
+            return;
+        }
 
         novel.dialog.innerHTML = str.substr(0,index);
         if (index++ === str.length){
@@ -907,23 +913,36 @@ function novel_handleClick(evt)
 {
     var now = new Date().getTime();
     var ok;
+
     if (!evt)
-    {
         evt = window.event;
-    }
+
     evt.cancelBubble = true;
     if (evt.stopPropagation)
-    {
         evt.stopPropagation();
-    }
     /*
         Don't allow two clicks within 1/4 second of each other
         And Wait for dialog to finish typing
     */
     ok = (now - novel.lastClick > 250);
     novel.lastClick = now;
+
     if (ok && novel.allowClick)
-    {
+        playNovel();
+}
+
+function novel_handleSkip(e)
+{
+    if (e.ctrlKey) {
+        if (!e)
+            evt = window.event;
+
+        e.cancelBubble = true;
+        if (e.stopPropagation)
+            e.stopPropagation();
+
+        novel.paused = false;
+        instantText = true;
         playNovel();
     }
 }
@@ -976,8 +995,7 @@ function clearTableau()
 */
 function imagemap(param)
 {
-    if (param.mapId)
-    {
+    if (param.mapId) {
         param.character.domRef.setAttribute("usemap", '#' + param.mapId);
         novel.paused = true;
         novel.ignoreClicks = !(param.screenActive);
@@ -988,8 +1006,7 @@ function imagemap(param)
 function show(param)
 {
     if (param.constructor == Character ||
-        param.constructor == TextBlock)
-    {
+        param.constructor == TextBlock) {
         param.display(null);
         param.show(true);
     }
@@ -998,8 +1015,7 @@ function show(param)
 function hide(param)
 {
     if (param.constructor == Character ||
-        param.constructor == TextBlock)
-    {
+        param.constructor == TextBlock) {
         param.show(false);
     }
 }
@@ -1010,26 +1026,19 @@ function remove(param)
     var foundPos = -1;
 
     if (param.constructor == Character ||
-        param.constructor == TextBlock)
-    {
-        for (i = 0; i < novel.actors.length && foundPos < 0; i++)
-        {
+        param.constructor == TextBlock) {
+        for (i = 0; i < novel.actors.length && foundPos < 0; i++) {
             if (novel.actors[i] == param)
-            {
                 foundPos = i;
-            }
         }
-        if (foundPos >= 0)
-        {
+
+        if (foundPos >= 0) {
             if (param.domRef)
-            {
                 param.domRef.parentNode.removeChild(param.domRef);
-            }
             param.domRef = null;
             novel.actors.splice(foundPos, 1);
         }
     }
-
 }
 
 function stopAudio()
@@ -1067,8 +1076,7 @@ function menu(menuArray)
     novel.dialog.innerHTML =
         menuArray[0].replace(/{{(.*?)}}/g, novel_interpolator);
     novel.dialog.style.textAlign="center";
-    for (var i = 1; i < menuArray.length; i += 2)
-    {
+    for (var i = 1; i < menuArray.length; i += 2) {
         var mItem = new MenuItem((i-1) / 2, menuArray[i], menuArray[i+1]);
         var el = mItem.domRef;
         novel_addOnClick(el, menuArray[i+1]);
@@ -1202,28 +1210,19 @@ function novel_changeBackground(param, clearAll)
 */
 function novel_finishLoadingBackground(effect, targetAlpha)
 {
-    if (novel.pendingBackgroundImage && novel.pendingBackgroundImage.complete)
-    {
-        if (!effect)
-        {
+    if (novel.pendingBackgroundImage && novel.pendingBackgroundImage.complete) {
+        if (!effect) {
             novel_setAlpha(novel.pendingBackgroundImage, targetAlpha);
             novel.bgAlpha = targetAlpha;
             playNovel();
-        }
-        else if (effect == "fade")
-        {
+        } else if (effect == "fade")
             novel_fadeBgIn(targetAlpha);
-        }
         else if (effect == "dissolve")
-        {
             novel_dissolveIn(targetAlpha, 0);
-        }
+
         novel.pendingBackgroundImage = null;
-    }
-    else
-    {
+    } else
         setTimeout('novel_finishLoadingBackground("' + effect + '", ' + targetAlpha + ')', 30);
-    }
 }
 
 /*
@@ -1237,16 +1236,11 @@ function novel_findMatchingElse()
     var f = novel.frame + 2;
     var item = novel_script[f];
     while (!((item == elsePart || item == endIf) && currLevel == novel.ifLevel)
-         && f < novel_script.length)
-    {
+         && f < novel_script.length) {
         if (item == ifStatement)
-        {
             currLevel++;
-        }
         else if (item == endIf)
-        {
             currLevel--;
-        }
         f += 2;
         item = novel_script[f];
     }
@@ -1263,16 +1257,11 @@ function novel_findMatchingEndIf()
     var currLevel = novel.ifLevel;
     var f = novel.frame + 2;
     var item = novel_script[f];
-    while (!(item == endIf && currLevel == novel.ifLevel) && f < novel_script.length)
-    {
+    while (!(item == endIf && currLevel == novel.ifLevel) && f < novel_script.length) {
         if (item == ifStatement)
-        {
             currLevel++;
-        }
         else if (item == endIf)
-        {
             currLevel--;
-        }
         f += 2;
         item = novel_script[f];
     }
@@ -1295,8 +1284,7 @@ function novel_audioLoop()
 */
 function call(label)
 {
-    if (typeof novel.subs[label] != 'undefined')
-    {
+    if (typeof novel.subs[label] != 'undefined') {
         novel.callStack.push(novel.frame);
         novel.frame = novel.subs[label];
     }
@@ -1308,9 +1296,7 @@ function call(label)
 function endSub()
 {
     if (novel.callStack.length != 0)
-    {
         novel.frame = novel.callStack.pop();
-    }
 }
 
 /*
@@ -1324,15 +1310,10 @@ function endSub()
 function setVars(param)
 {
     if (typeof param == "string")
-    {
         eval(param);
-    }
-    else if (typeof param == "object")
-    {
+    else if (typeof param == "object") {
         for (var property in param)
-        {
             novel.userVar[property] = param[property];
-        }
     }
 }
 
@@ -1439,9 +1420,7 @@ function audio(param)
 function pause(param)
 {
     if (param)
-    {
         novel.pauseTimer = window.setTimeout(novel_unPause, parseInt(param, 10));
-    }
     novel.paused = true;
 }
 
@@ -1458,16 +1437,11 @@ function ifStatement(param)
 {
     var ok = eval(param);
     if (ok)
-    {
         novel.ifStack.push(0); // 0 == "then" part
-    }
-    else
-    {
+    else {
         novel.frame = novel_findMatchingElse();
         if (novel_script[novel.frame] == elsePart)
-        {
             novel.ifStack.push(1);
-        }
     }
     novel.ifLevel = novel.ifStack.length;
 }
@@ -1479,8 +1453,7 @@ function elsePart()
 
 function endIf()
 {
-    if (novel.ifLevel > 0)
-    {
+    if (novel.ifLevel > 0) {
         novel.ifLevel--;
         novel.ifStack.pop();
     }
@@ -1505,41 +1478,40 @@ function jsCall(jsInfo)
 */
 function initNovel(w, h)
 {
-    if ((typeof novel != 'undefined'))
-    {
+    if ((typeof novel != 'undefined')) {
         if (novel.tableau)
-        {
             clearTableau();
-        }
+
         if (novel.dialog)
-        {
             clearDialog();
-        }
+
         stopAudio();
     }
+
     novel_disableSelection(document.body);
     novel = new Novel();
     novel.tableau = document.getElementById("novelDiv");
     novel.dialog = document.getElementById("dialogDiv");
-    if (novel.tableau.addEventListener)
-    {
+
+    if (novel.tableau.addEventListener) {
         novel.tableau.addEventListener('click', novel_handleClick, false);
         novel.dialog.addEventListener('click', novel_handleClick, false);
-    }
-    else if (novel.tableau.attachEvent)
-    {
+        window.addEventListener('keydown', novel_handleSkip, false);
+        window.addEventListener('keydown', novel_handleSkip, false);
+    } else if (novel.tableau.attachEvent) {
         novel.tableau.attachEvent('onclick', novel_handleClick);
         novel.dialog.attachEvent('onclick', novel_handleClick);
+        window.attachEvent('onkeydown', novel_handleSkip);
+        window.attachEvent('onkeydown', novel_handleSkip);
     }
-    if (!!(document.createElement('audio').canPlayType))
-    {
+
+    if (!!(document.createElement('audio').canPlayType)) {
         novel.audio = new Audio();
         novel.audio2 = new Audio();
-    }
-    else
-    {
+    } else
         novel.audio = null;
-    }
+
+
     novel.width = w;
     novel.height = h;
     prepareNovel();
@@ -1565,34 +1537,24 @@ function initNovel(w, h)
 function playNovel()
 {
     var obj;
-    if (novel.pauseTimer != null)
-    {
+    if (novel.pauseTimer != null) {
         window.clearTimeout(novel.pauseTimer);
         novel.pauseTimer = null;
     }
     novel.paused = false;
 
-    /*
-    novel.history.push(novel.frame);
-    novel.historyPos++;
-    */
-    while (!novel.ignoreClicks && novel.frame < novel_script.length && ! novel.paused)
-    {
+    while (!novel.ignoreClicks && novel.frame < novel_script.length && ! novel.paused) {
         obj = novel_script[novel.frame];
-//      document.getElementById("debug").innerHTML = "frame: " + novel.frame + " " + obj + "/" + novel_script[novel.frame +1];
+
         if (obj.constructor == Character || obj.constructor == TextBlock ||
-            obj.constructor == Input)
-        {
+            obj.constructor == Input) {
+
             obj.doAction(novel_script[novel.frame+1]);
             novel.frame += 2;
-        }
-        else if (typeof(obj) == "function")
-        {
+        } else if (typeof(obj) == "function") {
             novel_script[novel.frame].apply(window, [novel_script[novel.frame+1]]);
             novel.frame += 2;
-        }
-        else
-        {
+        } else {
             alert("Frame " + novel.frame + "\nUnknown: " +
                 obj + "\n" + typeof(obj));
             novel.frame += 2;
@@ -1602,8 +1564,6 @@ function playNovel()
             pop it off the script stack.
         */
         if (novel.frame >= novel_script.length)
-        {
             novel_popScript();
-        }
     }
 }
