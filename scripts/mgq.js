@@ -433,7 +433,7 @@ function prepareNovel()
         narrator, "As I grip my sword tighter....",
         scene, {image: "heaven.jpg", effect: "dissolve"},
         ilias, {image:"ch/ilias.png", position: center},
-        
+
     ]; //script
 }
 
