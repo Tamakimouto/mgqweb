@@ -137,7 +137,7 @@ body {
     width: 30%;
     margin: 0.5em auto;
     padding: 0.5em 3em;
-    background-color: #0050a0;
+    background-color: rgba(0, 0, 0, .6);
     position: relative;
     top: 50%;
     text-align: center;
